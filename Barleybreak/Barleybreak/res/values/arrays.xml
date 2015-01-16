@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="pref_diffs">
+        <item>@string/pref_veryeasy</item>
+        <item>@string/pref_easy</item>
+        <item>@string/pref_med</item>
+        <item>@string/pref_hard</item>
+        <item>@string/pref_imp</item>
+    </string-array>    
+     
+    <string-array name="pref_move">
+        <item>0</item>    
+        <item>0.25</item>
+        <item>0.5</item>
+        <item>0.9</item>
+    </string-array>
+    
+    <string-array name="pref_diffs_vals">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
+</resources>

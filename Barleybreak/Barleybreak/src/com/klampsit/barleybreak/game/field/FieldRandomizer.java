@@ -1,0 +1,126 @@
+package com.klampsit.barleybreak.game.field;
+
+import java.util.ArrayList;
+import java.util.Random;
+
+import android.os.Handler;
+import android.os.Message;
+
+public class FieldRandomizer {
+    private final static int ACTION_SIGNAL = 0;
+    private final static int END_SIGNAL = 1;
+    private Field mField;
+    private RandomizerHandler mHandler;
+    private long mPeriod;
+    private long mAddTime;
+    private boolean mStopped;    
+    private Thread mRandomExecutor;
+
+    private static class RandomizerHandler extends Handler {
+        private Runnable mOnMessageHandled;
+        private Runnable mOnStop;
+
+        public RandomizerHandler(Runnable aOnMessageHandled) {            
+            mOnMessageHandled = aOnMessageHandled;            
+        }
+        
+        public void setOnStop(Runnable aOnStop) {
+            mOnStop = aOnStop;
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case ACTION_SIGNAL:
+                    if (mOnMessageHandled != null) {
+                        mOnMessageHandled.run();
+                    }
+                    
+                    break;
+                case END_SIGNAL:
+                    if (mOnStop != null) {
+                        mOnStop.run();
+                    }
+                    
+                    break;
+            }            
+        }
+    };
+
+    public FieldRandomizer(Field aField, long aPeriod) {
+        mAddTime = 50;
+        mField = aField;
+        mPeriod = aPeriod;
+        mStopped = false;
+    }
+
+    public void mix(final int aSteps, final int aNotAtPlace) {
+        mStopped = false;
+        Runnable action = new Runnable() {
+
+            @Override
+            public void run() {
+                Random rand = new Random();
+                ArrayList<Coord<Integer>> coords = mField.getMovableCells();
+                mField.moveManyFrom(coords.get(rand.nextInt(coords.size() - 1)), false);
+            }
+        };
+
+        mHandler = new RandomizerHandler(action);
+
+        mRandomExecutor = new Thread() {
+            public void run() {
+                for (int i = 0; i < aSteps; ++i) {
+                    mHandler.sendEmptyMessage(ACTION_SIGNAL);
+                    
+                    try {
+                        sleep(mPeriod + mAddTime);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    
+                    if (mStopped) return;
+                }
+
+                if (aNotAtPlace > 0) {
+                    while (aNotAtPlace < mField.notAtPlaceCount()) {
+                        mHandler.sendEmptyMessage(ACTION_SIGNAL);
+
+                        try {
+                            sleep(mPeriod + mAddTime);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        
+                        if (mStopped) return;
+                    }
+                }
+
+                FieldRandomizer.this.stop();
+            };
+        };
+
+        mRandomExecutor.start();
+    }
+
+    public Thread getExecutor() {
+        return mRandomExecutor;
+    }
+
+    public void setPeriod(long aPeriod) {
+        mPeriod = aPeriod;
+    }
+
+    public void stop() {
+        mStopped = true;
+        mHandler.sendEmptyMessage(END_SIGNAL);
+    }
+
+    public boolean isStopped() {
+        return mStopped;
+    }
+    
+    public void setOnStop(Runnable onStop) {
+        mHandler.setOnStop(onStop);
+    }
+}

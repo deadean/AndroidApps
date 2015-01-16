@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    <PreferenceCategory android:title="@string/pref_grprofile" >
+        <EditTextPreference
+            android:defaultValue="Player"
+            android:key="@string/S_Username"
+            android:summary="@string/pref_pn_summ"
+            android:title="@string/pref_username" />
+
+        <Preference
+            android:key="clearScoresTable"
+            android:summary="@string/clearscores_summ"
+            android:title="@string/clearscores" />
+    </PreferenceCategory>
+</PreferenceScreen>

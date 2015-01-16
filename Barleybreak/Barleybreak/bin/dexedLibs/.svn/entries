@@ -1,0 +1,29 @@
+8
+
+dir
+89
+https://subversion.assembla.com/svn/trainingMadness.MadRepo/Android/BarleyBreakNew/bin/dexedLibs
+https://subversion.assembla.com/svn/trainingMadness.MadRepo
+delete
+
+
+2013-12-20T08:57:14.850674Z
+85
+devastium777
+
+
+svn:special svn:externals svn:needs-lock
+
+android-support-v4-49ae93eee4c6bb2d655e61d3bc146bcc.jar
+file
+
+
+
+delete
+2013-12-16T21:35:02.629000Z
+bd2991b50d522a296900d23bb61c7d41
+2013-12-20T08:57:14.850674Z
+85
+devastium777
+has-props
+

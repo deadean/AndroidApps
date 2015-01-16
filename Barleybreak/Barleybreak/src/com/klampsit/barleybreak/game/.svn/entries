@@ -1,0 +1,94 @@
+8
+
+dir
+89
+https://subversion.assembla.com/svn/trainingMadness.MadRepo/Android/BarleyBreakNew/src/com/klampsit/barleybreak/game
+https://subversion.assembla.com/svn/trainingMadness.MadRepo
+
+
+
+2014-01-06T22:03:16.213638Z
+89
+devastium777
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+2d0e4250-26af-4d68-98e4-6cc222a7a129
+
+Difficulty.java
+file
+
+
+
+
+2013-12-19T18:59:58.852800Z
+6976974b50765d6981901f1e0cd88132
+2013-12-20T08:55:33.635671Z
+84
+devastium777
+
+field
+dir
+
+GameEndListener.java
+file
+
+
+
+
+2013-12-07T14:58:55.041800Z
+899c27c7a2c427fb353ee23417ce909f
+2013-12-01T22:16:46.612266Z
+75
+devastium777
+
+Game.java
+file
+
+
+
+
+2014-01-08T17:54:12.819000Z
+9d047600a3c776705388091d901298eb
+2013-12-30T11:11:10.712753Z
+88
+devastium777
+
+Statistics.java
+file
+
+
+
+
+2013-12-18T22:34:40.277400Z
+ef8bc8b29b5259d7659ced939aba1bfb
+2013-12-20T08:55:33.635671Z
+84
+devastium777
+
+GamePreferences.java
+file
+
+
+
+
+2013-12-18T22:27:16.079400Z
+eea602cabdfd9deb8161f2e897078b5b
+2013-12-20T08:55:33.635671Z
+84
+devastium777
+
+player
+dir
+

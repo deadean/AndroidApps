@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="1dp"
+    android:background="@drawable/plasma_ab"
+    android:gravity="center_horizontal">
+
+    <com.klampsit.barleybreak.gui.GameField
+        android:id="@+id/FieldTable"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"       
+        android:animateLayoutChanges="true"
+        android:clipToPadding="false"        
+        android:layout_marginTop="30dp"
+        android:splitMotionEvents="false" />
+
+    <ImageButton
+        android:id="@+id/pauseButton"
+        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp"
+        android:onClick="onPauseClicked"
+        android:contentDescription="@string/game_pause"
+        android:src="@android:drawable/ic_media_pause" />
+    
+    <LinearLayout
+        android:id="@+id/gameStat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"        
+        android:orientation="vertical"
+        android:visibility="gone"         
+        >
+      
+        <TextView
+            android:id="@+id/stepsView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"           
+            android:background="@color/translucent_background"
+            android:padding="5dp"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+        
+        <TextView
+            android:id="@+id/timeView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"           
+            android:background="@color/translucent_background"
+            android:padding="5dp"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+    </LinearLayout>
+    
+    <TextView
+        android:id="@+id/congratilations"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"        
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp"
+        android:alpha="0"        
+        android:background="@drawable/congr_shape"
+        android:textColor="@android:color/black"
+        android:text="@string/congr"
+        android:textSize="25sp" />
+
+    <ImageButton
+        android:id="@+id/musicButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/pauseButton"
+        android:layout_toLeftOf="@+id/pauseButton"
+        android:contentDescription="@string/S_Music"
+        android:onClick="musicOn"
+        android:src="@drawable/muse_shape" />
+
+</RelativeLayout>

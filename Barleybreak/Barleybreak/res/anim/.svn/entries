@@ -1,0 +1,52 @@
+8
+
+dir
+89
+https://subversion.assembla.com/svn/trainingMadness.MadRepo/Android/BarleyBreakNew/res/anim
+https://subversion.assembla.com/svn/trainingMadness.MadRepo
+
+
+
+2014-01-06T22:03:16.213638Z
+89
+devastium777
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+2d0e4250-26af-4d68-98e4-6cc222a7a129
+
+bottom_out.xml
+file
+
+
+
+
+2013-12-16T20:40:47.313000Z
+60dbe29578180d38230be56f8a3df5ff
+2013-12-20T08:55:33.635671Z
+84
+devastium777
+
+scaleanim.xml
+file
+
+
+
+
+2013-12-07T14:59:24.805800Z
+947d86d3c42400a272add918aba1645c
+2013-12-01T22:16:46.612266Z
+75
+devastium777
+

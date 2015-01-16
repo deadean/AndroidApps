@@ -1,0 +1,138 @@
+8
+
+dir
+89
+https://subversion.assembla.com/svn/trainingMadness.MadRepo/Android/BarleyBreakNew
+https://subversion.assembla.com/svn/trainingMadness.MadRepo
+
+
+
+2014-01-06T22:03:16.213638Z
+89
+devastium777
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+2d0e4250-26af-4d68-98e4-6cc222a7a129
+
+.classpath
+file
+
+
+
+
+2013-12-07T14:59:26.354800Z
+5872d7b2d82a5fef13151ccffa503b73
+2013-12-01T22:16:46.612266Z
+75
+devastium777
+
+project.properties
+file
+
+
+
+
+2013-12-25T11:56:38.190600Z
+47ab3e092a6fee93641bfca6cc9eca39
+2013-12-25T12:41:02.492035Z
+87
+devastium777
+
+assets
+dir
+
+.project
+file
+
+
+
+
+2013-12-07T14:59:26.364800Z
+35805cb7c342391c5ad2a0a71b962b27
+2013-12-01T22:16:46.612266Z
+75
+devastium777
+
+lint.xml
+file
+
+
+
+
+2013-12-18T21:11:26.513400Z
+1217c1d2c988c5033bf0c7fdbc8104f9
+2013-12-20T08:55:33.635671Z
+84
+devastium777
+
+proguard-project.txt
+file
+
+
+
+
+2013-12-07T14:59:26.380800Z
+18bfe77c342b4698f1cef19cf8d918e2
+2013-12-01T22:16:46.612266Z
+75
+devastium777
+
+AndroidManifest.xml
+file
+
+
+
+
+2014-01-08T17:54:14.220000Z
+ffa3d2533847aadf62784f1267a37caa
+2014-01-06T22:03:16.213638Z
+89
+devastium777
+
+src
+dir
+
+bin
+dir
+
+
+
+delete
+
+gen
+dir
+
+libs
+dir
+
+res
+dir
+
+ic_launcher-web.png
+file
+
+
+
+
+2013-12-08T21:58:01.909000Z
+5639c8608966180d5ceee063f9079030
+2013-12-10T12:33:23.628625Z
+78
+devastium777
+has-props
+
+.settings
+dir
+

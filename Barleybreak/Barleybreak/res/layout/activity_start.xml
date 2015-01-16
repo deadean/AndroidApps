@@ -1,0 +1,113 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/Main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <TextView
+        android:id="@+id/welcome_inf"
+        style="@style/StartThemeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="@dimen/spaceBlock"
+        android:background="@drawable/welcome_shape"
+        android:text="@string/congr" />
+
+    <TableLayout
+        android:id="@+id/main_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true" >
+
+        <TableRow
+            android:id="@+id/el1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:onClick="onStartClicked" >
+
+            <ImageButton
+                android:layout_width="@dimen/startBlock"
+                android:layout_height="@dimen/startBlock"
+                android:background="@drawable/puzzle"
+                android:contentDescription="@string/warn" />
+
+            <TextView
+                style="@style/StartThemeText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/pref_game_style_pic" />
+        </TableRow>
+
+        <Space android:layout_height="@dimen/spaceBlock" />
+
+        <TableRow
+            android:id="@+id/el2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:onClick="onStartClicked" >
+
+            <ImageButton
+                android:layout_width="@dimen/startBlock"
+                android:layout_height="@dimen/startBlock"
+                android:background="@drawable/crying"
+                android:contentDescription="@string/warn" />
+
+            <TextView
+                style="@style/StartThemeText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/style15" />
+        </TableRow>
+
+        <Space android:layout_height="@dimen/spaceBlock" />
+
+        <TableRow
+            android:id="@+id/el3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onSettingsClicked" >
+
+            <ImageButton
+                android:layout_width="@dimen/startBlock"
+                android:layout_height="@dimen/startBlock"
+                android:background="@drawable/settings"
+                android:contentDescription="@string/warn" />
+
+            <TextView
+                style="@style/StartThemeText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/menu_settings" />
+        </TableRow>
+
+        <Space android:layout_height="@dimen/spaceBlock" />
+
+        <TableRow
+            android:id="@+id/el4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onStatisticsClicked" >
+
+            <ImageButton
+                android:layout_width="@dimen/startBlock"
+                android:layout_height="@dimen/startBlock"
+                android:background="@drawable/statistics"
+                android:contentDescription="@string/warn" />
+
+            <TextView
+                style="@style/StartThemeText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/stat" />
+        </TableRow>
+    </TableLayout>
+
+</RelativeLayout>

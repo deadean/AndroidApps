@@ -1,0 +1,45 @@
+= image:http://robobinding.org/images/robobinding_logo.png[width=60, height=60] RoboBinding
+
+A data-binding http://martinfowler.com/eaaDev/PresentationModel.html[Presentation Model](MVVM) framework for the Android platform. 
+RoboBinding helps you write UI code that is easier to read, test and maintain without performance compromise(code generation instead of java reflection).
+
+* removes - *lots of unnecessary code(e.g., addXXListener(), findViewById()...)* - by binding.
+
+* turns - *hard to unit tests and Android unit tests running for ages which makes unit tests impractical* - into *pure POJO PresentationModels* with normal JUnit tests.
+
+* provides the object cursor as a replacement to - *the relational cursor but we are used to operating objects*.
+
+* it is easy to implement attribute bindings for any custom components, third-party components or Android widgets, which simplifies the code and produces more maintainable code base.
+
+Let's watch http://skillsmatter.com/podcast/os-mobile-server/core-dev-talk-robobinding[an introductory video] and then get started from link:http://robobinding.org/getting_started.html[here].
+
+RoboBinding values *code quality*. The framework source code is very readable and comes with a complete set of tests,
+which makes contributing easy and enjoyable. Want contributing? start link:http://robobinding.org/insight_into_framework.html#_set_up_eclipse_development_environment[here].
+
+RoboBinding loves to hear *any voices(negtive or positive) or suggestions* and invite you to post into RoboBinding http://groups.google.com/group/robobinding[Google group].
+
+
+
+* link:http://robobinding.org/getting_started.html[Getting Started]
+
+* link:http://robobinding.org/insight_into_framework.html[Insight Into Framework]
+
+* link:https://oss.sonatype.org/service/local/repositories/releases/archive/org/robobinding/robobinding/0.8.9/robobinding-0.8.9-javadoc.jar/!/index.html[API and Binding Attributes JavaDocs]
+
+* link:http://robobinding.org/about.html[About]
+
+* link:http://robobinding.org/versions.html[Versions](latest *0.8.9*)
+
+* link:http://robobinding.org/index.zh.html[Chinese中文] 及 image:http://qplus3.idqqimg.com/qun/portal/img/logo2.png["QQ群", width=60, height=25]：308303599
+
+image:http://www.iconpng.com/png/large-torrent/download.png[width=30, height=30] Download: http://search.maven.org/#search%7Cga%7C1%7Crobobinding[releases] on Maven Central and latest https://oss.sonatype.org/index.html#nexus-search;quick%7Erobobinding[snapshots] on Sonatype OSS Repo.
+
+image:https://lh3.googleusercontent.com/-YM2DGm-QreQ/Upb85v3Y-gI/AAAAAAAABt4/GIcGGykyHW8/w152-h106-no/Google+groups.png["Google groups", width=43, height=30] Questions and Discussions: http://groups.google.com/group/robobinding[Google group]
+
+image:https://g.twimg.com/Twitter_logo_blue.png[width=30, height=30] Twitter: https://twitter.com/RoboBinding[@robobinding]
+
+image:https://raw.github.com/github/media/master/octocats/blacktocat-32.png["GitHub", width=30, height=30] Issues: https://github.com/RoboBinding/RoboBinding/issues[Raising an issue]
+
+image:http://web-static-cloudfront.s3.amazonaws.com/images/badges/BuiltOnDEV.png[Build and tested on CloudBees DEV@cloud]
+
+image::https://img.shields.io/badge/Android%20Arsenal-RoboBinding-brightgreen.svg?style=flat[alt="Android Arsenal", link="https://android-arsenal.com/details/1/990"]

@@ -1,0 +1,370 @@
+package com.klampsit.barleybreak.gui;
+
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnCancelListener;
+import android.content.DialogInterface.OnClickListener;
+import android.content.Intent;
+import android.content.ServiceConnection;
+import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
+import android.os.Bundle;
+import android.os.IBinder;
+import android.preference.PreferenceManager;
+import android.util.DisplayMetrics;
+import android.view.View;
+import android.view.ViewGroup.LayoutParams;
+import android.view.animation.AlphaAnimation;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.klampsit.barleybreak.R;
+import com.klampsit.barleybreak.game.Game;
+import com.klampsit.barleybreak.game.GameEndListener;
+import com.klampsit.barleybreak.game.GamePreferences;
+import com.klampsit.barleybreak.game.field.Coord;
+import com.klampsit.barleybreak.game.player.Player;
+import com.klampsit.barleybreak.game.player.PlayerActions;
+import com.klampsit.barleybreak.gui.prefs.SettingsActivity;
+import com.klampsit.barleybreak.utils.CalculationListener;
+import com.klampsit.barleybreak.utils.Music;
+import com.klampsit.barleybreak.utils.SettingsStringsManager;
+import com.klampsit.barleybreak.utils.Utils;
+import com.klampsit.barleybreak.utils.timer.TickerListener;
+
+public class GameActivity extends Activity {
+    public static final String debug = "Deb";
+    private SharedPreferences mPreferences;
+    private Game mGame;
+
+    private boolean mStarted = false;
+    private boolean mIsPaused = false;
+    private SettingsStringsManager mStrManager;
+
+    private boolean mIsBound = false;
+    private Music mServ;
+    private ServiceConnection mScon;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mStrManager = new SettingsStringsManager(getResources());
+        Utils.setOrientation(this, false); // TODO Orientation control
+        Utils.hideTitleAndActionBar(this);
+        setContentView(R.layout.activity_game);
+        mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        initMusic();
+
+        if (getIntent().getExtras().getBoolean("puzzle", false)) {
+            initImage();
+        }
+
+        initGame();
+        initField(); 
+        
+        mGame.randomize(10, ((GameField) findViewById(R.id.FieldTable)).getExchangeSpeed());
+        mGame.setOnRandomizeFinished(new Runnable() {
+
+            @Override
+            public void run() {
+                statConnect();
+                ((GameField) findViewById(R.id.FieldTable)).controlActivate(mGame.getPlayer());
+            }
+        });
+    }
+
+    private synchronized void performPause() {
+        if (!mIsPaused) {
+            mIsPaused = true;
+            Intent intent = new Intent(GameActivity.this, ActivityPause.class);
+            mGame.getPlayer().action(PlayerActions.PAUSE);
+            startActivityForResult(intent, 10);
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    protected void onPause() {
+        performPause();
+        super.onPause();
+
+        if (mServ != null && mPreferences.getBoolean(mStrManager.get(R.string.S_Music), false)) {
+            mServ.pauseMusic();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        mIsPaused = false;
+        super.onResume();
+
+        if (mServ != null && mPreferences.getBoolean(mStrManager.get(R.string.S_Music), false)) {
+            if (mServ != null) {
+                mServ.resumeMusic();
+            }
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mGame.getRandomizer().stop();
+        
+        if (mServ != null) {
+            mServ.stopMusic();
+            doUnbindService();
+            mServ.stopService(new Intent(this, Music.class));
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 10) {
+            mGame.getPlayer().action(PlayerActions.RESUME);
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onBackPressed() {
+        mGame.getPlayer().action(PlayerActions.PAUSE);
+        AlertDialog ad = new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_info)
+            .setTitle(R.string.game_ad_t)
+            .setPositiveButton(R.string.ad_Yes, new OnClickListener() {
+
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    GameActivity.this.mGame.getPlayer().action(PlayerActions.EXIT);
+                    mIsPaused = true;
+                    GameActivity.super.onBackPressed();
+                }
+            })
+            .setNegativeButton(R.string.ad_Cancel, new OnClickListener() {
+
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            })
+            .create();
+
+        ad.setOnCancelListener(new OnCancelListener() {
+
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                mGame.getPlayer().action(PlayerActions.RESUME);
+            }
+        });
+
+        ad.show();
+    }
+
+    public void musicOn(View v) {
+        boolean mode = !((ImageButton) v).isSelected();
+        mPreferences.edit().putBoolean(mStrManager.get(R.string.S_Music), mode).commit();
+
+        if (mode) {
+            startMusic();
+
+            if (mServ != null) {
+                mServ.resumeMusic();
+            }
+        } else {
+            if (mServ != null) {
+                mServ.pauseMusic();
+            }
+        }
+
+        ((ImageButton) v).setSelected(mode);
+    }
+
+    public void onPauseClicked(View v) {
+        performPause();
+    }
+
+    private void initImage() {
+        String imPath = mPreferences.getString(mStrManager.get(R.string.S_GameImage), "");
+        Drawable dr = Utils.getDrawableFromPath(getResources(), imPath);
+
+        if (imPath.isEmpty() || dr == null) {
+            SettingsActivity.getImageDialog(this).setTitle(R.string.NeedImage).show();
+            return;
+        }
+
+        ImageView imView = new ImageView(this);
+        imView.setImageDrawable(dr);
+        SettingsActivity.getPreDialog(this, imView)
+            .setNeutralButton(R.string.playgame, new Dialog.OnClickListener() {
+
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    // TODO Play is here
+                }
+            })
+            .show();
+    }
+
+    private void initMusic() {
+        boolean musicOn = mPreferences.getBoolean(mStrManager.get(R.string.S_Music), false);
+        ((ImageButton) findViewById(R.id.musicButton)).setSelected(musicOn);
+
+        if (musicOn) {
+            startMusic();
+        }
+    }
+
+    private void startMusic() {
+        if (mStarted) {
+            return;
+        } else {
+            mStarted = true;
+        }
+
+        mScon = new ServiceConnection() {
+
+            @Override
+            public void onServiceConnected(ComponentName name, IBinder binder) {
+                mServ = ((Music.ServiceBinder) binder).getService();
+            }
+
+            @Override
+            public void onServiceDisconnected(ComponentName name) {
+                mServ = null;
+            }
+        };
+
+        doBindService();
+        Intent music = new Intent(this, Music.class);
+        startService(music);
+    }
+
+    private void initGame() {
+        int diff = Integer.parseInt(mPreferences.getString(mStrManager.get(R.string.S_Difficulty),
+            "3"));
+        boolean timeTrialMode = mPreferences.getBoolean(mStrManager.get(R.string.S_TimeTrial),
+            false);
+        Coord<Integer> sizePair = Utils.parseCoord(mPreferences.getString(mStrManager.get(R.string.S_Size),
+            "3-3")); // TODO Get from dialog
+        Player player = new Player((GameField) findViewById(R.id.FieldTable),
+            Double.parseDouble(mPreferences.getString(mStrManager.get(R.string.S_MoveSpeed), "0")));
+        mGame = new Game(new GamePreferences(sizePair, diff, timeTrialMode), player);
+        mGame.setOnEnd(new GameEndListener() {
+            @Override
+            public void onGameEnd(int code) {
+                mGame.setOnEnd(null);
+                GameField field = (GameField) findViewById(R.id.FieldTable);
+                field.controlDeactivate();
+                mIsPaused = true;
+
+                switch (code) {
+                    case Game.SUCCESS:
+                        findViewById(R.id.congratilations).setAlpha(255);
+                        Utils.fadeIn(findViewById(R.id.congratilations), 2000);
+                        field.animateEnding();
+                        break;
+                    case Game.FAILED:
+                        new AlertDialog.Builder(GameActivity.this).setIcon(android.R.drawable.ic_dialog_info)
+                            .setTitle(R.string.gameover_title)
+                            .setMessage(R.string.timesup)
+                            .setPositiveButton(android.R.string.ok, new OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                    GameActivity.this.finish();
+                                }
+                            })
+                            .show();
+                        break;
+                }
+            }
+        });
+    }
+
+    private void initField() {
+        int diff = Integer.parseInt(mPreferences.getString(mStrManager.get(R.string.S_Difficulty),
+            "3"));
+        GameField field = (GameField) findViewById(R.id.FieldTable);
+        field.connectWithField(mGame.getField());
+        DisplayMetrics m = getResources().getDisplayMetrics();
+        int h = m.heightPixels;
+        int w = m.widthPixels;
+        String imagePath = getIntent().getBooleanExtra("puzzle", false) ? mPreferences.getString(mStrManager.get(R.string.S_GameImage),
+            null)
+            : null;
+        field.setExchangeSpeed(1000); // TODO Make to change in dialog
+        field.imagingTable(w, h, 0, imagePath);
+        LayoutParams lp = field.getLayoutParams();
+        lp.width = w;
+        lp.height = h;
+        field.setLayoutParams(lp);
+        field.changeForDiff(diff);
+    }
+
+    private void statConnect() {
+        int[] views = new int[] { R.id.timeView, R.id.stepsView };
+        int[] titles = new int[] { R.string.Time, R.string.Steps };
+        String[] formats = new String[] { "%.1f", "%d" };
+
+        @SuppressWarnings("rawtypes")
+        CalculationListener[] calcs = new CalculationListener[] { new CalculationListener<Float>() {
+
+            @Override
+            public Float calculate() {
+                return (float) mGame.getGt().getTimeMs() / 1000;
+            }
+        },
+
+        new CalculationListener<Integer>() {
+
+            @Override
+            public Integer calculate() {
+                return mGame.getStat().getSteps();
+            }
+        } };
+
+        for (int i = 0; i < views.length; i++) {
+            final TextView tv = (TextView) findViewById(views[i]);
+            final String ts = getResources().getString(titles[i]);
+            final String format = formats[i];
+            @SuppressWarnings("unchecked")
+            final CalculationListener<Number> calc = calcs[i];
+            tv.setText(String.format("%s : " + format, ts, calc.calculate()));
+            mGame.getTicker().addListener(new TickerListener() {
+
+                @Override
+                public void onGameTimerSignal() {
+                    if (!mGame.getGt().isPaused()) {
+                        tv.setText(String.format("%s : " + format, ts, calc.calculate()));
+                    }
+                }
+            });
+        }
+        
+        View a = findViewById(R.id.gameStat);
+        a.setVisibility(View.VISIBLE);
+        a.startAnimation(new AlphaAnimation(0, 1f));
+    }
+
+    private void doBindService() {
+        bindService(new Intent(this, Music.class), mScon, Context.BIND_AUTO_CREATE);
+        mIsBound = true;
+    }
+
+    private void doUnbindService() {
+        if (mIsBound) {
+            unbindService(mScon);
+            mIsBound = false;
+        }
+    }
+}

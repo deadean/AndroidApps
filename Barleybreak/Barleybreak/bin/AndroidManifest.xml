@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.klampsit.barleybreak"
+    android:versionCode="2"
+    android:versionName="2.0" >
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <uses-sdk
+        android:minSdkVersion="14"
+        android:targetSdkVersion="18" />
+
+    <instrumentation
+        android:name="android.test.InstrumentationTestRunner"
+        android:label="MY FUCKN TESTS"
+        android:targetPackage="com.klampsit.barleybreak.utils" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name="com.klampsit.barleybreak.gui.StartActivity"
+            android:configChanges="keyboardHidden"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.klampsit.barleybreak.gui.prefs.SettingsActivity"
+            android:icon="@android:drawable/star_on"
+            android:label="@string/pref_title"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name="com.klampsit.barleybreak.gui.ActivityPause"
+            android:theme="@style/Theme.Translucent" />
+        <activity
+            android:name="com.klampsit.barleybreak.gui.GameActivity"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name="com.klampsit.barleybreak.gui.CropDialog"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:theme="@style/CropDlg" />
+
+        <service
+            android:name="com.klampsit.barleybreak.utils.Music"
+            android:enabled="true" />
+    </application>
+
+</manifest>

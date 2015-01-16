@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="shadow">3dp</dimen>
+    <dimen name="startBlock">60dp</dimen>
+    <dimen name="spaceBlock">5dp</dimen>
+</resources>

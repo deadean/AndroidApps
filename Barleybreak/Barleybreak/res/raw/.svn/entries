@@ -1,0 +1,54 @@
+8
+
+dir
+89
+https://subversion.assembla.com/svn/trainingMadness.MadRepo/Android/BarleyBreakNew/res/raw
+https://subversion.assembla.com/svn/trainingMadness.MadRepo
+
+
+
+2013-12-11T00:12:12.421471Z
+79
+devastium777
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+2d0e4250-26af-4d68-98e4-6cc222a7a129
+
+clicksnd.mp3
+file
+
+
+
+
+2013-12-07T16:03:34.276300Z
+c82694aed14eae68e43cee921c373c1c
+2013-12-08T22:12:06.953905Z
+77
+devastium777
+has-props
+
+chu.mp3
+file
+
+
+
+
+2013-12-10T20:43:18.765900Z
+e767582cbc0bc721c40dcf3308201a27
+2013-12-11T00:12:12.421471Z
+79
+devastium777
+has-props
+

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <issue id="DefaultLocale" severity="ignore" />
+    <issue id="HandlerLeak">
+        <ignore path="src/com/barley_break/utils/timer/GameTimer.java" />
+        <ignore path="src/com/barley_break/utils/timer/Ticker.java" />
+    </issue>
+</lint>

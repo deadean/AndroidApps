@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory android:title="@string/pref_g_title" >
+        <ListPreference
+            android:defaultValue="3"
+            android:entries="@array/pref_diffs"
+            android:entryValues="@array/pref_diffs_vals"
+            android:key="@string/S_Difficulty"
+            android:title="@string/pref_g_diff_title" />        
+
+        <CheckBoxPreference
+            android:key="@string/S_TimeTrial"
+            android:summary="@string/pref_tmt_summ"
+            android:title="@string/pref_tmt_title" />
+
+        <Preference
+            android:key="@string/S_GameImage"
+            android:title="@string/pref_g_defimage_t" />
+
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="@string/S_GameSet"
+            android:summary="@string/pref_g_gen_gms_summ"
+            android:title="@string/pref_g_gen_gms_title" />
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="@string/S_Music"
+            android:title="@string/pref_music" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/controls" >
+        <ListPreference
+            android:defaultValue="0.25"
+            android:entries="@array/pref_move"
+            android:entryValues="@array/pref_move"
+            android:key="@string/S_MoveSpeed"
+            android:summary="@string/movefac_summ"
+            android:title="@string/movefac" />
+    </PreferenceCategory>
+</PreferenceScreen>

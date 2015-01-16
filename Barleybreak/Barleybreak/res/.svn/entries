@@ -1,0 +1,70 @@
+8
+
+dir
+89
+https://subversion.assembla.com/svn/trainingMadness.MadRepo/Android/BarleyBreakNew/res
+https://subversion.assembla.com/svn/trainingMadness.MadRepo
+
+
+
+2014-01-06T22:03:16.213638Z
+89
+devastium777
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+2d0e4250-26af-4d68-98e4-6cc222a7a129
+
+values
+dir
+
+xml
+dir
+
+drawable-xxhdpi
+dir
+
+values-ru
+dir
+
+drawable-hdpi
+dir
+
+anim
+dir
+
+values-v11
+dir
+
+values-v14
+dir
+
+drawable-ldpi
+dir
+
+drawable-mdpi
+dir
+
+raw
+dir
+
+layout-land
+dir
+
+drawable-xhdpi
+dir
+
+layout
+dir
+
